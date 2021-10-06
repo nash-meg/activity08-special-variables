@@ -119,15 +119,69 @@ patterns in strings of information. Do the following with your dataset:
 
 Once you have verified that this worked, overwrite your data object.
 
+``` r
+songs %>% 
+  mutate(
+    date = as.character(`chart date`), 
+    year = str_sub(date, 1, 4), 
+    month = str_sub(date, 5, 6), 
+    day = str_sub(date, 7, 8),
+    date = make_date(year, month, day)
+    )
+```
+
+    ## # A tibble: 34,605 x 9
+    ##    title   artist  `overall peak` `weeks on chart` `chart date` date       year 
+    ##    <chr>   <chr>            <dbl>            <dbl>        <dbl> <date>     <chr>
+    ##  1 Uptown… MARK R…              1               15     20150307 2015-03-07 2015 
+    ##  2 Thinki… ED SHE…              2               20     20150307 2015-03-07 2015 
+    ##  3 Love M… ELLIE …              3                7     20150307 2015-03-07 2015 
+    ##  4 Sugar   MAROON…              4                6     20150307 2015-03-07 2015 
+    ##  5 Take M… HOZIER               2               28     20150307 2015-03-07 2015 
+    ##  6 FourFi… RIHANN…              4                5     20150307 2015-03-07 2015 
+    ##  7 Blank … TAYLOR…              1               17     20150307 2015-03-07 2015 
+    ##  8 Style   TAYLOR…              8                9     20150307 2015-03-07 2015 
+    ##  9 Earned… THE WE…              9                9     20150307 2015-03-07 2015 
+    ## 10 Lips A… MEGHAN…              4               18     20150307 2015-03-07 2015 
+    ## # … with 34,595 more rows, and 2 more variables: month <chr>, day <chr>
+
 #### Analyzing using dates
 
 What 10 songs spent the longest on the charts? Give only the title,
 artists, and weeks.
 
-**Response**:
+``` r
+songs %>% 
+  select(title, artist, `weeks on chart`) %>% 
+  arrange(desc(`weeks on chart`))
+```
+
+    ## # A tibble: 34,605 x 3
+    ##    title                        artist                          `weeks on chart`
+    ##    <chr>                        <chr>                                      <dbl>
+    ##  1 Radioactive                  IMAGINE DRAGONS                               85
+    ##  2 I'm Yours                    JASON MRAZ                                    76
+    ##  3 How Do I Live                LeANN RIMES                                   69
+    ##  4 Counting Stars               ONEREPUBLIC                                   68
+    ##  5 Party Rock Anthem            LMFAO featuring LAUREN BENNETT…               67
+    ##  6 Foolish Games / You Were Me… JEWEL                                         65
+    ##  7 Rolling In The Deep          ADELE                                         64
+    ##  8 Before He Cheats             CARRIE UNDERWOOD                              64
+    ##  9 Ho Hey                       THE LUMINEERS                                 62
+    ## 10 Need You Now                 LADY ANTEBELLUM                               60
+    ## # … with 34,595 more rows
+
+**Response**: The top 10 songs were Radioactive, I’m Yours, How Do I
+Live, Counting Stars, Party Rock Anthem, Foolish Games / You Were Meant
+For Me, Rolling In The Deep, Before He Cheats, Ho Hey, and Need You Now
 
 What date did the oldest song(s) in this dataset leave the charts? Give
 only the *distinct* dates.
+
+``` r
+#songs %>% 
+  #select(title, `chart date`) %>%
+```
 
 **Response**:
 

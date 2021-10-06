@@ -62,7 +62,17 @@ Do the following with your dataset:
 
 Once you have verified that this worked, overwrite your data object.
 
+```{r Mutating the date into the correct format}
+songs %>% 
+  mutate(
+    date = as.character(`chart date`), 
+    year = str_sub(date, 1, 4), 
+    month = str_sub(date, 5, 6), 
+    day = str_sub(date, 7, 8),
+    date = make_date(year, month, day)
+    )
 
+```
 
 
 #### Analyzing using dates
@@ -70,16 +80,23 @@ Once you have verified that this worked, overwrite your data object.
 What 10 songs spent the longest on the charts?
 Give only the title, artists, and weeks.
 
+```{r 10 songs longest on charts}
+songs %>% 
+  select(title, artist, `weeks on chart`) %>% 
+  arrange(desc(`weeks on chart`))
+```
 
 
-
-**Response**:
+**Response**: The top 10 songs were Radioactive, I'm Yours, How Do I Live, Counting Stars, Party Rock Anthem, Foolish Games / You Were Meant For Me, Rolling In The Deep, Before He Cheats, Ho Hey, and Need You Now
 
 
 What date did the oldest song(s) in this dataset leave the charts?
 Give only the *distinct* dates.
 
-
+```{r Oldest songs leaving charts}
+#songs %>% 
+  #select(title, `chart date`) %>%
+```
 
 
 **Response**:
